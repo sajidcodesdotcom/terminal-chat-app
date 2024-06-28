@@ -32,12 +32,15 @@ def start_server():
     server_ip = "0.0.0.0"
     port = 8000
     server.bind((server_ip, port))
-    server.listen(10) # listen for 10 connections (more than 10 clients are not allowed to connect simultaneously.
+    server.listen(5) # listen for 5 connections (more than 10 clients are not allowed to connect simultaneously.
     print(f"listening on {server_ip}:{port}")
-    client_socket, client_address = server.accept()
-    print(f"Accepted connection from {client_address[0]}:{client_address[1]}\n") 
 
-    threading.Thread(target=handle_client, args=(client_socket,)).start()
+    while True:
+        client_socket, client_address = server.accept()
+        clients.append(client_socket)
+        print(f"Accepted connection from {client_address[0]}:{client_address[1]}")
+
+        threading.Thread(target=handle_client, args=(client_socket,)).start()
 
 if __name__ == "__main__":
     start_server()
