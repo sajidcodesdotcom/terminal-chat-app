@@ -21,10 +21,11 @@ def receive_message(client_socket, user_id):
 def send_message(client_socket, user_id):
     while True:
         try:
-            message = input("Me: ")
+            message = input()
             if message.strip().lower() == "exit":
                 client_socket.close()
                 break
+            message = f"\n -> {message}"
             client_socket.send(f"{user_id}: {message}".encode('utf-8'))
         except Exception as e:
             raise e
