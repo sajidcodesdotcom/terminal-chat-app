@@ -8,11 +8,13 @@ def receive_message(client_socket, user_id):
             if not response:
                 print("Connection closed by the server")
                 break
-            sender_id, message = response.split(": ", 1)
-            if sender_id == user_id:
-                print(f"ME: {message}")
-            else:
+            if ":" in response:
+                sender_id, message = response.split(": ", 1)
                 print(f"{sender_id}: {message}")
+            if response == "exit":
+                print(f"~ {user_id} HAS LEFT THE CHAT")
+                client_socket.close()
+                break
         except Exception as e:
             print(f"Error receiving message: {e}")
             client_socket.close()
@@ -23,6 +25,7 @@ def send_message(client_socket, user_id):
         try:
             message = input()
             if message.strip().lower() == "exit":
+                client_socket.send("exit".encode("utf-8"))
                 client_socket.close()
                 break
             message = f"\n -> {message}"
