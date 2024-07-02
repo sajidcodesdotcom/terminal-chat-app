@@ -50,7 +50,7 @@ def start_client():
         server_port = 8000
         client_socket.connect((server_ip, server_port))
 
-        welcome_text = "-------connected to the server----------\n -------Welcome to terminal chatting---------\n -> happy chatting, to exit the chat \n simply send the word 'exit' or [ctrl+c]\n"
+        welcome_text = "-------connected to the server----------\n -------Welcome to terminal chatting---------\n -> happy chatting, to exit the chat \n simply press [ctrl+c]\n"
 
         text = (welcome_text)
         animate_text(Slide, welcome_text)
