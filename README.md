@@ -10,6 +10,8 @@ The application allows multiple clients to connect to a server and send text mes
 -   Allows to choose a name before starting the chat.
 -   Some cool terminal text effects.
 
+!(demo image)[https://raw.githubusercontent.com/sajidcodesdotcom/terminal-chat-app/refs/heads/main/demo.jpeg]
+
 ## Requirements
 
 -   Python 3 or later
