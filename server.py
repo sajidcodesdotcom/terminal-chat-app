@@ -57,21 +57,20 @@ def start_server():
     server.listen(10)  # listen for 10 connections
     print(f"Listening on {server_ip}:{port}")
 
-    executor = concurrent.futures.ThreadPoolExecutor(max_workers=10)
-    try:
-        while True:
-            client_socket, client_address = server.accept()
-            clients.append(client_socket)
-            print(f"Accepted connection from {client_address[0]}:{client_address[1]}")
-            print(f"Total connected users: {len(clients)}")
-            broadcast_client_count()
-            executor.submit(handle_client, client_socket)
-    except KeyboardInterrupt:
-        print("\nShutting down server...")
-        for client in clients:
-            client.close()
-        server.close()
-        executor.shutdown(wait=True)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        try:
+            while True:
+                client_socket, client_address = server.accept()
+                clients.append(client_socket)
+                print(f"Accepted connection from {client_address[0]}:{client_address[1]}")
+                print(f"Total connected users: {len(clients)}")
+                broadcast_client_count()
+                executor.submit(handle_client, client_socket)
+        except KeyboardInterrupt:
+            print("\nShutting down server...")
+            for client in clients:
+                client.close()
+            server.close()
 
 
 if __name__ == "__main__":
